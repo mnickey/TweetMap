@@ -19,7 +19,7 @@ function loadMap() {
         zoom: 11,
 
         //Map center
-        center: new google.maps.LatLng(40.748817,-73.985428),
+        center: new google.maps.LatLng(40.748817, -73.985428),
 
         //Limit min/max zoom
         minZoom: 2,
@@ -61,7 +61,7 @@ function loadMap() {
     var mapId = document.getElementById('map');
 
     //Create the map
-    map = new google.maps.Map(mapId,mapOptions);
+    map = new google.maps.Map(mapId, mapOptions);
 
     //Update the lat/lng on load of the map center
     updateCurrentLatLng(map.getCenter());
@@ -80,7 +80,7 @@ function mapEventListeners() {
 
     // Mouse move updates the coordinates
     var mouseMoveChanged = google.maps.event.addListener(map, 'mousemove',
-        function(event) {
+        function (event) {
 
             //Update the coordinates
             updateCurrentLatLng(event.latLng);
@@ -90,13 +90,13 @@ function mapEventListeners() {
 
 
     var mouseRightClick = google.maps.event.addListener(map, 'rightclick',
-        function(event) {
+        function (event) {
 
             //Get the map zoom and increment
-            var z = map.getZoom()+1;
+            var z = map.getZoom() + 1;
 
             //Increment the zoom or reset
-            if(z < 16) {
+            if (z < 16) {
                 map.setZoom(z);
             }
             else {
@@ -110,21 +110,21 @@ function mapEventListeners() {
 
     //Wait for map to load
     var listenerIdle = google.maps.event.addListenerOnce(map, 'idle',
-        function() {
-            console.log('Map is ready!');
+        function () {
+            alert('Map is ready!');
         }
     );
 
     //Drag End
     var listenerDragEnd = google.maps.event.addListener(map, 'dragend',
-        function() {
+        function () {
             updateUrlLocation(map.getCenter(), map.getZoom());
         }
     );
 
     //Zoom changed
     var listenerZoomChanged = google.maps.event.addListener(map, 'zoom_changed',
-        function() {
+        function () {
             updateUrlLocation(map.getCenter(), map.getZoom());
         }
     );
@@ -143,10 +143,10 @@ function updateCurrentLatLng(latLng) {
 //Update the URL with the map center and zoom
 function updateUrlLocation(center, zoom) {
 
-    var url = '?lat='+center.lat()+'&lon='+center.lng()+'&zoom='+zoom;
+    var url = '?lat=' + center.lat() + '&lon=' + center.lng() + '&zoom=' + zoom;
 
     //Set the url
-    window.history.pushState({center: center, zoom: zoom }, 'map center', url);
+    window.history.pushState({center: center, zoom: zoom}, 'map center', url);
 }
 
 //Load the map
