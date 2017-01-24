@@ -19,7 +19,7 @@ function loadMap() {
         zoom: 11,
 
         //Map center
-        center: new google.maps.LatLng(40.748817, -73.985428),
+        center: new google.maps.LatLng(37.3765640, -122.0438740),
 
         //Limit min/max zoom
         minZoom: 2,
@@ -63,6 +63,8 @@ function loadMap() {
     //Create the map
     map = new google.maps.Map(mapId, mapOptions);
 
+    var newMarker = this.addMarker();
+
     //Update the lat/lng on load of the map center
     updateCurrentLatLng(map.getCenter());
 
@@ -71,8 +73,6 @@ function loadMap() {
 
     //Add the event listeners
     mapEventListeners();
-
-
 }
 
 // Add the map event listeners
@@ -84,10 +84,8 @@ function mapEventListeners() {
 
             //Update the coordinates
             updateCurrentLatLng(event.latLng);
-
         }
     );
-
 
     var mouseRightClick = google.maps.event.addListener(map, 'rightclick',
         function (event) {
@@ -128,7 +126,6 @@ function mapEventListeners() {
             updateUrlLocation(map.getCenter(), map.getZoom());
         }
     );
-
 }
 
 // Update the position of the mouse in latitude and longitude
@@ -137,7 +134,6 @@ function updateCurrentLatLng(latLng) {
     //Update the coordinates
     lat.innerHTML = latLng.lat();
     lng.innerHTML = latLng.lng();
-
 }
 
 //Update the URL with the map center and zoom
@@ -149,13 +145,21 @@ function updateUrlLocation(center, zoom) {
     window.history.pushState({center: center, zoom: zoom}, 'map center', url);
 }
 
+//Add a marker to the map
+function addMarker(center) {
+
+    //Create the marker (#MarkerOptions)
+    marker = new google.maps.Marker({
+
+        //Position of marker
+        position: new google.maps.LatLng(37.3762880, -122.0442750),
+
+        //Map
+        map: map
+    });
+
+    return marker;
+}
+
 //Load the map
 google.maps.event.addDomListener(window, 'load', loadMap());
-
-
-// function initMap() {
-//     map = new google.maps.Map(document.getElementById('map'), {
-//         center: {lat: 37.3762880, lng: -122.0442750},
-//         zoom: 8
-//     });
-// }
